@@ -1,9 +1,12 @@
-name: Update Data
+name: Run scheduled job
 
 on:
   schedule:
     - cron: '*/15 * * * *' # every 15 minutes
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   update-data:
