@@ -28,6 +28,12 @@ class HoyoUpdateNotifierWebApp:
                 ft.PopupMenuButton(
                     items=[
                         ft.PopupMenuItem(
+                            icon=ft.icons.HELP_CENTER_OUTLINED,
+                            text="Tutorial",
+                            data="https://github.com/seriaati/hoyo-update-notifier/blob/main/tutorial.md",
+                            on_click=self._popup_menu_item_on_click,
+                        ),
+                        ft.PopupMenuItem(
                             icon=ft.icons.CHAT_OUTLINED,
                             text="Contact me on Discord",
                             data="https://discord.com/users/410036441129943050",
