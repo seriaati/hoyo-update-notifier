@@ -16,11 +16,18 @@ def setup_logging() -> "Generator[Any, Any, Any]":
     try:
         # __enter__
         log.setLevel(logging.INFO)
-        handler = logging.StreamHandler()
+        stream_handler = logging.StreamHandler()
+        file_handler = logging.handlers.RotatingFileHandler(
+            "hoyo_update_notifier.log", maxBytes=1024 * 1024, backupCount=5
+        )
+
         dt_fmt = "%Y-%m-%d %H:%M:%S"
         fmt = logging.Formatter("[{asctime}] [{levelname}] {name}: {message}", dt_fmt, style="{")
-        handler.setFormatter(fmt)
-        log.addHandler(handler)
+        stream_handler.setFormatter(fmt)
+        file_handler.setFormatter(fmt)
+
+        log.addHandler(stream_handler)
+        log.addHandler(file_handler)
 
         yield
     finally:
