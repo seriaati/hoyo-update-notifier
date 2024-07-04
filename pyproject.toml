@@ -20,7 +20,6 @@ optional = true
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.11"
-git-cliff = "^1.4.0"
 
 [build-system]
 requires = ["poetry-core"]
