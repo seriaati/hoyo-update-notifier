@@ -19,11 +19,11 @@ async def main() -> None:
     session = aiohttp.ClientSession()
 
     for game, endpoint in ENDPOINTS.items():
-        logger.info("Fetching %s update data", game)
+        logger.info(f"Fetching {game} update data")
 
         async with session.get(endpoint) as resp:
             if resp.status != 200:
-                logger.error("Failed to fetch %s update data", game)
+                logger.error(f"Failed to fetch {game} update data")
                 continue
 
             data = await resp.json()
@@ -33,14 +33,14 @@ async def main() -> None:
 
         game_version_info = await GameVersionInfo.get_or_none(game=game)
         if game_version_info is None:
-            logger.info("Creating %s game version info", game)
+            logger.info(f"Creating {game} game version info")
             game_version_info = await GameVersionInfo.create(
                 game=game, version_num=version, md5=md5
             )
         else:
             if game_version_info.md5 != md5:
                 webhooks = await Webhook.filter(game=game).all()
-                logger.info("Sending %s webhooks, total %s", game, len(webhooks))
+                logger.info(f"Sending {game} webhooks, total {len(webhooks)}")
                 for webhook in webhooks:
                     await send_webhook(webhook.url, get_game_webhook_data(game, version))
 
