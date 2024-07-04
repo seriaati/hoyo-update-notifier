@@ -4,15 +4,15 @@ import aiohttp
 from loguru import logger
 from tortoise import Tortoise
 
-from hoyo_update_notifier.constants import ENDPOINTS
-from hoyo_update_notifier.models import GameVersionInfo, Webhook
-from hoyo_update_notifier.webhook import get_game_webhook_data, send_webhook
+from hun.constants import ENDPOINTS
+from hun.models import GameVersionInfo, Webhook
+from hun.webhook import get_game_webhook_data, send_webhook
 
 
 async def main() -> None:
     await Tortoise.init(
         db_url="sqlite://db.sqlite3",
-        modules={"models": ["hoyo_update_notifier.models"]},
+        modules={"models": ["hun.models"]},
     )
     await Tortoise.generate_schemas()
 
