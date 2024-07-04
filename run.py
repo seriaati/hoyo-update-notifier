@@ -4,13 +4,13 @@ import sys
 import flet as ft
 from tortoise import Tortoise
 
-from hun.web_app import HoyoUpdateNotifierWebApp
+import hun
 
 
 async def main(page: ft.Page) -> None:
     page.title = "Hoyo Update Notifier"
     page.scroll = ft.ScrollMode.ADAPTIVE
-    web_app = HoyoUpdateNotifierWebApp(page)
+    web_app = hun.HoyoUpdateNotifierWebApp(page)
     await web_app.start()
 
 
