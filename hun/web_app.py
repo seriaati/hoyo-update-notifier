@@ -6,6 +6,8 @@ from .constants import ENDPOINTS
 from .models import Webhook
 from .webhook import get_test_webhook_data, send_webhook
 
+__all__ = ("HoyoUpdateNotifierWebApp",)
+
 
 class HoyoUpdateNotifierWebApp:
     def __init__(self, page: ft.Page) -> None:

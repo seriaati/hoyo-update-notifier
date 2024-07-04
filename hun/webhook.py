@@ -4,6 +4,8 @@ import aiohttp
 
 from .constants import ICONS
 
+__all__ = ("get_game_webhook_data", "get_test_webhook_data", "send_webhook")
+
 
 def get_game_webhook_data(game: str, version: str) -> dict[str, Any]:
     return {
@@ -52,9 +54,10 @@ def get_test_webhook_data() -> dict[str, Any]:
 
 async def send_webhook(webhook_url: str, json_: dict[str, Any]) -> bool:
     try:
-        async with aiohttp.ClientSession() as session, session.post(
-            webhook_url, json=json_
-        ) as resp:
+        async with (
+            aiohttp.ClientSession() as session,
+            session.post(webhook_url, json=json_) as resp,
+        ):
             return resp.status == 204
     except Exception:
         return False

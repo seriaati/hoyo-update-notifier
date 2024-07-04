@@ -1,6 +1,8 @@
 from tortoise import fields
 from tortoise.models import Model
 
+__all__ = ("GameVersionInfo", "Webhook")
+
 
 class GameVersionInfo(Model):
     id = fields.IntField(pk=True, generated=True)

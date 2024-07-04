@@ -7,6 +7,7 @@ __all__ = (
     "HYP_CN_ENDPOINT",
     "HYP_GLOBAL_ENDPOINT",
     "get_game_icon",
+    "is_hoyoplay",
 )
 
 GAMES: tuple[str, ...] = (
@@ -69,3 +70,7 @@ def get_game_icon(game_name: str) -> str:
             return icon_url
     msg = f"Cannot find icon for game: {game_name}"
     raise ValueError(msg)
+
+
+def is_hoyoplay(endpoint: str) -> bool:
+    return "hyp" in endpoint
