@@ -56,7 +56,7 @@ class HoyoUpdateNotifierWebApp:
         return ft.Dropdown(
             label="Game & region",
             options=[ft.dropdown.Option(text=game) for game in ENDPOINTS],
-            value=list(ENDPOINTS.keys())[0],
+            value=next(iter(ENDPOINTS.keys())),
             ref=self._game_dropdown_ref,
             on_change=self._game_dropdown_on_change,
         )
