@@ -4,7 +4,6 @@ import sys
 import flet as ft
 from tortoise import Tortoise
 
-from hoyo_update_notifier.logging import setup_logging
 from hoyo_update_notifier.web_app import HoyoUpdateNotifierWebApp
 
 
@@ -15,7 +14,7 @@ async def main(page: ft.Page) -> None:
     await web_app.start()
 
 
-with setup_logging():
+if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     loop.run_until_complete(
         Tortoise.init(
