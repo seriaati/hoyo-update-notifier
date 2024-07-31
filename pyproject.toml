@@ -8,7 +8,7 @@ description = "Notifies via Discord webhook when a Hoyoverse game updates"
 license = "GPL-v3.0"
 name = "hoyo-update-notifier"
 readme = "README.md"
-version = "1.1.0"
+version = "1.1.1"
 package-mode = false
 
 [tool.poetry.dependencies]
