@@ -2,7 +2,7 @@ from typing import Any
 
 import aiohttp
 
-from .constants import ICONS
+from .constants import get_game_icon
 
 __all__ = ("get_game_webhook_data", "get_test_webhook_data", "send_webhook")
 
@@ -21,7 +21,7 @@ def get_game_webhook_data(game: str, version: str) -> dict[str, Any]:
                 "description": f"{game} (v{version})",
                 "color": 8688619,
                 "thumbnail": {
-                    "url": ICONS[game],
+                    "url": get_game_icon(game),
                 },
             }
         ],
