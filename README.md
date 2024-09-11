@@ -1,5 +1,7 @@
 # hoyo-update-notifier
 
+**THE DOMAIN NAME WAS CHANGED!!** https://hoyo-update-notifier.seria.moe  
+
  ![image](https://github.com/seriaati/hoyo-update-notifier/assets/61446626/aa8c624b-70b4-497f-96b9-98d20c18c54a)
 
  Notifies via Discord webhook when a Hoyoverse game updates.  
