@@ -1,84 +1,27 @@
 [project]
 name = "hoyo-update-notifier"
-requires-python = ">=3.11"
-
-[tool.poetry]
-authors = ["seria <seria.ati@gmail.com>"]
-description = "Notifies via Discord webhook when a Hoyoverse game updates"
-license = "GPL-v3.0"
-name = "hoyo-update-notifier"
+version = "2.0.0"
+description = "Notify via Discord webhook when a Hoyo game is updated/preload is available"
 readme = "README.md"
-version = "1.1.1"
-package-mode = false
-
-[tool.poetry.dependencies]
-aiohttp = "^3.9.5"
-flet = "~0.18.0"
-python = "^3.11"
-tortoise-orm = "^0.21.4"
-loguru = "^0.7.2"
-
-[tool.poetry.group.dev]
-optional = true
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.5.0"
-
-[build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core"]
-
-[tool.ruff]
-line-length = 100
-
-[tool.ruff.lint.per-file-ignores]
-"**/__init__.py" = ["F403"]
-"enka/models/*.py" = ["ALL"]
-"playground.py" = ["T201"]
-
-[tool.ruff.lint]
-ignore = [
-  "E501",
-  "ANN401",
-  "ANN101",
-  "ANN102",
-  "PLR0913",
-  "PLR2004",
-  "PLR0917",
-  "PLR6301",
-  "ANN002",
-  "ERA001",
-  "RUF100",
+requires-python = ">=3.11"
+dependencies = [
+    "aiofiles>=24.1.0",
+    "aiohttp>=3.10.10",
+    "fastapi>=0.115.2",
+    "loguru>=0.7.2",
+    "pydantic>=2.9.2",
+    "tortoise-orm>=0.21.7",
+    "uvicorn>=0.32.0",
 ]
-preview = true
-select = [
-  "E",
-  "W",
-  "C90",
-  "F",
-  "UP",
-  "B",
-  "SIM",
-  "I",
-  "N",
-  "TCH",
-  "ANN",
-  "ASYNC",
-  "A",
-  "C4",
-  "EM",
-  "FA",
-  "ICN",
-  "G",
-  "PIE",
-  "T20",
-  "ARG",
-  "ERA",
-  "LOG",
-  "PL",
-  "TRY",
-  "RUF",
-]
+license = { file = "LICENSE" }
+authors = [{ name = "seriaati", email = "seria.ati@gmail.com" }]
 
-[tool.ruff.lint.flake8-type-checking]
-quote-annotations = true
+[tool.pyright]
+enableTypeIgnoreComments = false
+reportIncompatibleMethodOverride = false
+reportIncompatibleVariableOverride = false
+reportUnnecessaryComparison = true
+reportUnnecessaryContains = true
+reportUnnecessaryIsInstance = true
+reportUnnecessaryTypeIgnoreComment = true
+typeCheckingMode = "standard"

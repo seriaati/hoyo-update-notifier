@@ -1,7 +1,7 @@
 {
     "apps": [
         {
-            "name": "hoyo-update-notifier",
+            "name": "hun",
             "script": "./run.py",
             "interpreter": "./.venv/bin/python"
         }

@@ -1,20 +1,54 @@
+from __future__ import annotations
+
+from pydantic import BaseModel
 from tortoise import fields
 from tortoise.models import Model
 
-__all__ = ("GameVersionInfo", "Webhook")
+from .constants import Region
+
+__all__ = ("GamePackage", "GamePackageModel", "Webhook")
 
 
-class GameVersionInfo(Model):
+class GamePackage(Model):
     id = fields.IntField(pk=True, generated=True)
-    game = fields.CharField(max_length=255)
-    md5 = fields.CharField(max_length=32)
-    version_num = fields.CharField(max_length=5)
+    region = fields.CharEnumField(enum_type=Region)
+    version = fields.CharField(max_length=8)
+    is_preload = fields.BooleanField(default=False)
 
 
 class Webhook(Model):
-    uuid = fields.UUIDField()
+    id = fields.IntField(pk=True, generated=True)
     url = fields.CharField(max_length=255)
-    game = fields.CharField(max_length=255)
+    region = fields.CharEnumField(enum_type=Region)
 
-    class Meta:
-        unique_together = ("uuid", "game")
+
+class WebhookCreate(BaseModel):
+    url: str
+    region: Region
+
+
+class WebhookTest(BaseModel):
+    url: str
+
+
+class Game(BaseModel):
+    id: str
+    biz: str
+
+
+class MajorPackage(BaseModel):
+    version: str
+
+
+class MainPackage(BaseModel):
+    major: MajorPackage
+
+
+class PreDownloadPackage(BaseModel):
+    major: MajorPackage | None = None
+
+
+class GamePackageModel(BaseModel):
+    game: Game
+    main: MainPackage
+    pre_download: PreDownloadPackage | None = None

@@ -1,76 +1,67 @@
-from typing import Final
+from __future__ import annotations
 
-__all__ = (
-    "ENDPOINTS",
-    "GAMES",
-    "GAME_BIZS",
-    "HYP_CN_ENDPOINT",
-    "HYP_GLOBAL_ENDPOINT",
-    "get_game_icon",
-    "is_hoyoplay",
-)
+from enum import StrEnum
 
-GAMES: tuple[str, ...] = (
-    "Genshin Impact Global",
-    "Genshin Impact China",
-    "Honkai Impact 3rd Global",
-    "Honkai Impact 3rd China",
-    "Honkai Impact 3rd SEA",
-    "Honkai: Star Rail Global",
-    "Honkai: Star Rail China",
-    "Zenless Zone Zero Global",
-    "Zenless Zone Zero China",
-)
+__all__ = ("HYP_CN_ENDPOINT", "HYP_GLOBAL_ENDPOINT", "Region", "get_region_icon", "get_region_name")
 
-HYP_GLOBAL_ENDPOINT: Final[str] = (
-    "https://sg-hyp-api.hoyoverse.com/hyp/hyp-connect/api/getGamePackages?launcher_id=VYTpXlbWo8"
-)
-"""HoYoPlay global endpoint, contains GI, HSR, ZZZ version data."""
 
-HYP_CN_ENDPOINT: Final[str] = (
-    "https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGamePackages?launcher_id=jGHBHlcOq1"
-)
-"""HoYoPlay China endpoint, contains GI, HSR, ZZZ, HI3 version data."""
+class Region(StrEnum):
+    GI_GLB = "gopR6Cufr3"
+    GI_CN = "1Z8W5NHUQb"
 
-ENDPOINTS: Final[dict[str, str]] = {
-    "Genshin Impact Global": HYP_GLOBAL_ENDPOINT,
-    "Genshin Impact China": HYP_CN_ENDPOINT,
-    "Honkai Impact 3rd Global": "https://sdk-os-static.mihoyo.com/bh3_global/mdk/launcher/api/resource?key=dpz65xJ3&channel_id=1&launcher_id=10&sub_channel_id=1",
-    "Honkai Impact 3rd China": HYP_CN_ENDPOINT,
-    "Honkai Impact 3rd SEA": "https://sdk-os-static.mihoyo.com/bh3_global/mdk/launcher/api/resource?channel_id=1&key=tEGNtVhN&launcher_id=9&sub_channel_id=1",
-    "Honkai: Star Rail Global": HYP_GLOBAL_ENDPOINT,
-    "Honkai: Star Rail China": HYP_CN_ENDPOINT,
-    "Zenless Zone Zero Global": HYP_GLOBAL_ENDPOINT,
-    "Zenless Zone Zero China": HYP_CN_ENDPOINT,
+    HSR_GLB = "4ziysqXOQ8"
+    HSR_CN = "64kMb5iAWu"
+
+    ZZZ_GLB = "U5hbdsT9W7"
+    ZZZ_CN = "x6znKlJ0xK"
+
+    HI3_US_EU = "5TIVvvcwtM"
+    HI3_SEA = "bxPTXSET5t"
+    HI3_JP = "g0mMIvshDb"
+    HI3_KR = "uxB4MC7nzC"
+    HI3_TW = "wkE5P5WsIf"
+    HI3_CN = "osvnlOc0S8"
+
+
+HYP_GLOBAL_ENDPOINT = "https://sg-hyp-api.hoyoverse.com/hyp/hyp-connect/api/getGamePackages?launcher_id=VYTpXlbWo8"
+HYP_CN_ENDPOINT = "https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGamePackages?launcher_id=jGHBHlcOq1"
+
+REGION_NAMES = {
+    Region.GI_GLB: "Genshin Impact (Global)",
+    Region.GI_CN: "Genshin Impact (China)",
+    Region.HSR_GLB: "Honkai: Star Rail (Global)",
+    Region.HSR_CN: "Honkai: Star Rail (China)",
+    Region.ZZZ_GLB: "Zenless Zone Zero (Global)",
+    Region.ZZZ_CN: "Zenless Zone Zero (China)",
+    Region.HI3_US_EU: "Honkai Impact 3rd (US/EU)",
+    Region.HI3_SEA: "Honkai Impact 3rd (SEA)",
+    Region.HI3_JP: "Honkai Impact 3rd (Japan)",
+    Region.HI3_KR: "Honkai Impact 3rd (Korea)",
+    Region.HI3_TW: "Honkai Impact 3rd (Taiwan)",
+    Region.HI3_CN: "Honkai Impact 3rd (China)",
 }
-
-GAME_BIZS: Final[dict[str, str]] = {
-    "Genshin Impact Global": "hk4e_global",
-    "Genshin Impact China": "hk4e_cn",
-    "Honkai Impact 3rd Global": "bh3_global",
-    "Honkai Impact 3rd China": "bh3_cn",
-    "Honkai Impact 3rd SEA": "bh3_sea",
-    "Honkai: Star Rail Global": "hkrpg_global",
-    "Honkai: Star Rail China": "hkrpg_cn",
-    "Zenless Zone Zero Global": "nap_global",
-    "Zenless Zone Zero China": "nap_cn",
-}
-
-ICONS: Final[dict[str, str]] = {
-    "Genshin Impact": "https://iili.io/dKleQ4I.png",
-    "Honkai Impact 3rd": "https://iili.io/dKleLEN.png",
-    "Honkai: Star Rail": "https://iili.io/dKlesBp.png",
-    "Zenless Zone Zero": "https://iili.io/dKlekrP.png",
+ICONS = {
+    (Region.GI_CN, Region.GI_GLB): "https://iili.io/dKleQ4I.png",
+    (
+        Region.HI3_CN,
+        Region.HI3_JP,
+        Region.HI3_KR,
+        Region.HI3_SEA,
+        Region.HI3_TW,
+        Region.HI3_US_EU,
+    ): "https://iili.io/dKleLEN.png",
+    (Region.HSR_CN, Region.HSR_GLB): "https://iili.io/dKlesBp.png",
+    (Region.ZZZ_CN, Region.ZZZ_GLB): "https://iili.io/dKlekrP.png",
 }
 
 
-def get_game_icon(game_name: str) -> str:
-    for game, icon_url in ICONS.items():
-        if game_name.startswith(game):
-            return icon_url
-    msg = f"Cannot find icon for game: {game_name}"
-    raise ValueError(msg)
+def get_region_name(region: Region) -> str:
+    return REGION_NAMES.get(region, "Unknown region")
 
 
-def is_hoyoplay(endpoint: str) -> bool:
-    return "hyp" in endpoint
+def get_region_icon(region: Region) -> str:
+    for regions, icon in ICONS.items():
+        if region in regions:
+            return icon
+
+    return ""
