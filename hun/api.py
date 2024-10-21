@@ -48,6 +48,10 @@ async def get_regions() -> JSONResponse:
 
 @app.post("/webhooks")
 async def create_webhook(data: WebhookCreate) -> Response:
+    existing = await Webhook.filter(**data.model_dump()).first()
+    if existing is not None:
+        return Response(status_code=status.HTTP_409_CONFLICT)
+
     await Webhook.create(**data.model_dump())
     return Response(status_code=status.HTTP_201_CREATED)
 
