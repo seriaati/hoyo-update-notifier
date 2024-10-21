@@ -133,7 +133,7 @@
                 })
                     .then(response => {
                         if (response.ok) {
-                            errorMessage.textContent = 'Webhook saved successfully!';
+                            errorMessage.textContent = 'Webhook saved successfully for ' + regionSelect.options[regionSelect.selectedIndex].text + '!';
                             errorMessage.style.color = '#4caf50';
                         } else {
                             throw new Error('Failed to save webhook');
