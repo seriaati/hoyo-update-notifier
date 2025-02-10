@@ -17,7 +17,10 @@ async def save_and_send_webhooks(
 
             for webhook in webhooks:
                 success = await hun.send_webhook(
-                    webhook.url, hun.get_game_webhook_data(region, version=version, is_preload=is_preload)
+                    webhook.url,
+                    hun.get_game_webhook_data(
+                        region, version=version, is_preload=is_preload, role_ids=webhook.role_ids
+                    ),
                 )
                 if not success:
                     logger.error(f"Failed to send webhook to {webhook.url!r}")

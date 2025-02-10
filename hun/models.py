@@ -1,3 +1,5 @@
+# pyright: reportAssignmentType=false
+
 from __future__ import annotations
 
 from pydantic import BaseModel
@@ -20,6 +22,7 @@ class Webhook(Model):
     id = fields.IntField(pk=True, generated=True)
     url = fields.CharField(max_length=255)
     region = fields.CharEnumField(enum_type=Region)
+    role_ids: fields.Field[list[int]] = fields.JSONField(default="[]")
 
 
 class WebhookCreate(BaseModel):

@@ -9,7 +9,7 @@ from .constants import REGION_NAMES, Region, get_region_icon
 __all__ = ("get_game_webhook_data", "get_test_webhook_data", "send_webhook")
 
 
-def get_game_webhook_data(region: Region, *, version: str, is_preload: bool) -> dict[str, Any]:
+def get_game_webhook_data(region: Region, *, version: str, is_preload: bool, role_ids: list[int]) -> dict[str, Any]:
     return {
         "username": "Hoyo Update Notifier",
         "avatar_url": "https://i.imgur.com/tLHYWyR.png",
@@ -22,6 +22,7 @@ def get_game_webhook_data(region: Region, *, version: str, is_preload: bool) -> 
                 "thumbnail": {"url": get_region_icon(region)},
             }
         ],
+        "content": " ".join(f"<@&{role_id}>" for role_id in role_ids),
     }
 
 
