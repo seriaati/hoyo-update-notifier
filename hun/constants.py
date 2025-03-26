@@ -23,8 +23,20 @@ class Region(StrEnum):
     HI3_CN = "osvnlOc0S8"
 
 
-HYP_GLOBAL_ENDPOINT = "https://sg-hyp-api.hoyoverse.com/hyp/hyp-connect/api/getGamePackages?launcher_id=VYTpXlbWo8"
-HYP_CN_ENDPOINT = "https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGamePackages?launcher_id=jGHBHlcOq1"
+HYP_GLOBAL_ENDPOINT = (
+    "https://sg-hyp-api.hoyoverse.com/hyp/hyp-connect/api/getGamePackages?launcher_id=VYTpXlbWo8"
+)
+HYP_CN_ENDPOINT = (
+    "https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGamePackages?launcher_id=jGHBHlcOq1"
+)
+MAINT_ENDPOINTS = {
+    Region.GI_GLB: "https://sg-cg-api.hoyoverse.com/hk4e_global/cg/gamer/api/getGlobalApplicationMaintenance",
+    Region.GI_CN: "https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/getGlobalApplicationMaintenance",
+    Region.HSR_GLB: "https://cg-nap-api.mihoyo.com/hkrpg_cn/cg/gamer/api/getGlobalApplicationMaintenance",
+    Region.HSR_CN: "https://cg-nap-api.mihoyo.com/hkrpg_cn/cg/gamer/api/getGlobalApplicationMaintenance",
+    Region.ZZZ_GLB: "https://cg-hkrpg-static.mihoyo.com/hkrpg_cn/cg/gamer/api/getGlobalApplicationMaintenance",
+    Region.ZZZ_CN: "https://cg-hkrpg-static.mihoyo.com/hkrpg_cn/cg/gamer/api/getGlobalApplicationMaintenance",
+}
 
 REGION_NAMES = {
     Region.GI_GLB: "Genshin Impact (Global)",

@@ -8,7 +8,7 @@ from tortoise.models import Model
 
 from .constants import Region
 
-__all__ = ("GamePackage", "GamePackageModel", "Webhook")
+__all__ = ("GameMaint", "GamePackage", "GamePackageModel", "Webhook")
 
 
 class GamePackage(Model):
@@ -16,6 +16,17 @@ class GamePackage(Model):
     region = fields.CharEnumField(enum_type=Region)
     version = fields.CharField(max_length=8)
     is_preload = fields.BooleanField(default=False)
+
+
+class GameMaint(Model):
+    id = fields.IntField(pk=True, generated=True)
+    region = fields.CharEnumField(enum_type=Region)
+    version = fields.CharField(max_length=8)
+    maint_start_notified = fields.BooleanField(default=False)
+    maint_end_notified = fields.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ("region", "version")
 
 
 class Webhook(Model):

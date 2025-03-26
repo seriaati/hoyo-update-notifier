@@ -43,7 +43,9 @@ async def root() -> HTMLResponse:
 
 @app.get("/regions")
 async def get_regions() -> JSONResponse:
-    return JSONResponse(content={r.value: n for r, n in REGION_NAMES.items()}, status_code=status.HTTP_200_OK)
+    return JSONResponse(
+        content={r.value: n for r, n in REGION_NAMES.items()}, status_code=status.HTTP_200_OK
+    )
 
 
 @app.post("/webhooks")
