@@ -37,6 +37,14 @@ MAINT_ENDPOINTS = {
     Region.ZZZ_GLB: "https://cg-nap-api.mihoyo.com/nap_cn/cg/gamer/api/getGlobalApplicationMaintenance",
     Region.ZZZ_CN: "https://cg-nap-api.mihoyo.com/nap_cn/cg/gamer/api/getGlobalApplicationMaintenance",
 }
+MAINT_GAME_BIZS = {
+    Region.GI_GLB: "hk4e_global",
+    Region.GI_CN: "hk4e_cn",
+    Region.HSR_GLB: "hkrpg_cn",
+    Region.HSR_CN: "hkrpg_cn",
+    Region.ZZZ_GLB: "nap_cn",
+    Region.ZZZ_CN: "nap_cn",
+}
 
 REGION_NAMES = {
     Region.GI_GLB: "Genshin Impact (Global)",

@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from loguru import logger
 
-from hun.constants import MAINT_ENDPOINTS, Region
+from hun.constants import MAINT_ENDPOINTS, MAINT_GAME_BIZS, Region
 
 if TYPE_CHECKING:
     import aiohttp
@@ -22,11 +22,17 @@ async def get_maint_status(
     """
     logger.info(f"Checking maintenance status for {region}")
 
-    headers = {"x-rpc-app_version": version, "x-rpc-client_type": "1"}
-    endpoint = MAINT_ENDPOINTS.get(region)
-
-    if endpoint is None:
+    if (game_biz := MAINT_GAME_BIZS.get(region)) is None:
         return None
+
+    if (endpoint := MAINT_ENDPOINTS.get(region)) is None:
+        return None
+
+    headers = {
+        "x-rpc-app_version": version,
+        "x-rpc-client_type": "1",
+        "x-rpc-cg-game_biz": game_biz,
+    }
 
     try:
         async with session.get(endpoint, headers=headers) as resp:
