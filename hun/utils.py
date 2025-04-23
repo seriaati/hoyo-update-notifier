@@ -31,7 +31,7 @@ async def get_maint_status(
     headers = {
         "x-rpc-app_version": version,
         "x-rpc-client_type": "1",
-        "x-rpc-cg-game_biz": game_biz,
+        "x-rpc-cg_game_biz": game_biz,
     }
 
     try:
