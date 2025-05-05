@@ -110,35 +110,42 @@ async def handle_game_maint(session: aiohttp.ClientSession) -> None:
             await maint.save(update_fields=("maint_end_notified",))
 
 
+async def handle_sophon_packages(branches: list[hun.GameBranch]) -> None:
+    for branch in branches:
+        preload_package = branch.pre_download
+        if preload_package is None:
+            continue
+
+        region = hun.Region(branch.game.id)
+
+        existing_preload_package = await hun.GamePackage.get_or_none(region=region, is_preload=True)
+        await save_package_and_notify(
+            existing_preload_package,
+            version=preload_package.version,
+            region=region,
+            is_preload=True,
+        )
+
+
 async def main() -> None:
     await Tortoise.init(db_url="sqlite://hun.db", modules={"models": ["hun.models"]})
     await Tortoise.generate_schemas()
 
     packages: list[hun.GamePackageModel] = []
+    branches: list[hun.GameBranch] = []
 
     async with aiohttp.ClientSession() as session:
-        async with session.get(hun.HYP_CN_ENDPOINT) as resp:
-            logger.info("Fetching CN game package data")
-            resp.raise_for_status()
-            packages.extend(
-                [
-                    hun.GamePackageModel(**data)
-                    for data in (await resp.json())["data"]["game_packages"]
-                ]
-            )
+        # Normal game packages
+        packages.extend(await hun.get_game_packages(session, api_region="cn"))
+        packages.extend(await hun.get_game_packages(session, api_region="global"))
 
-        async with session.get(hun.HYP_GLOBAL_ENDPOINT) as resp:
-            logger.info("Fetching Global game package data")
-            resp.raise_for_status()
-            packages.extend(
-                [
-                    hun.GamePackageModel(**data)
-                    for data in (await resp.json())["data"]["game_packages"]
-                ]
-            )
+        # Sophon pre-downloads
+        branches.extend(await hun.get_game_branches(session, api_region="global"))
+        branches.extend(await hun.get_game_branches(session, api_region="cn"))
 
         await handle_packages(packages)
         await handle_game_maint(session)
+        await handle_sophon_packages(branches)
 
 
 if __name__ == "__main__":

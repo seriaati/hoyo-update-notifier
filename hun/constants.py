@@ -2,7 +2,13 @@ from __future__ import annotations
 
 from enum import StrEnum
 
-__all__ = ("HYP_CN_ENDPOINT", "HYP_GLOBAL_ENDPOINT", "Region", "get_region_icon", "get_region_name")
+__all__ = (
+    "GAME_PACKAGES_CN_URL",
+    "GAME_PACKAGES_GLOBAL_URL",
+    "Region",
+    "get_region_icon",
+    "get_region_name",
+)
 
 
 class Region(StrEnum):
@@ -23,12 +29,20 @@ class Region(StrEnum):
     HI3_CN = "osvnlOc0S8"
 
 
-HYP_GLOBAL_ENDPOINT = (
+GAME_PACKAGES_GLOBAL_URL = (
     "https://sg-hyp-api.hoyoverse.com/hyp/hyp-connect/api/getGamePackages?launcher_id=VYTpXlbWo8"
 )
-HYP_CN_ENDPOINT = (
+GAME_PACKAGES_CN_URL = (
     "https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGamePackages?launcher_id=jGHBHlcOq1"
 )
+
+GAME_BRANCHES_GLOBAL_URL = (
+    "https://sg-hyp-api.hoyoverse.com/hyp/hyp-connect/api/getGameBranches?launcher_id=VYTpXlbWo8"
+)
+GAME_BRANCHES_CN_URL = (
+    "https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGameBranches?launcher_id=jGHBHlcOq1"
+)
+
 MAINT_ENDPOINTS = {
     Region.GI_GLB: "https://sg-cg-api.hoyoverse.com/hk4e_global/cg/gamer/api/getGlobalApplicationMaintenance",
     Region.GI_CN: "https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/getGlobalApplicationMaintenance",

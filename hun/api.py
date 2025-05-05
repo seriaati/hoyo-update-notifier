@@ -11,7 +11,8 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from tortoise import Tortoise
 
 from .constants import REGION_NAMES
-from .models import Webhook, WebhookCreate, WebhookTest
+from .models import Webhook
+from .schemas import WebhookCreate, WebhookTest
 from .webhook import get_test_webhook_data, send_webhook
 
 if TYPE_CHECKING:

@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-from pydantic import BaseModel
 from tortoise import fields
 from tortoise.models import Model
 
 from .constants import Region
 
-__all__ = ("GameMaint", "GamePackage", "GamePackageModel", "Webhook")
+__all__ = ("GameMaint", "GamePackage", "Webhook")
 
 
 class GamePackage(Model):
@@ -34,35 +33,3 @@ class Webhook(Model):
     url = fields.CharField(max_length=255)
     region = fields.CharEnumField(enum_type=Region)
     role_ids: fields.Field[list[int]] = fields.JSONField(default="[]")
-
-
-class WebhookCreate(BaseModel):
-    url: str
-    region: Region
-
-
-class WebhookTest(BaseModel):
-    url: str
-
-
-class Game(BaseModel):
-    id: str
-    biz: str
-
-
-class MajorPackage(BaseModel):
-    version: str
-
-
-class MainPackage(BaseModel):
-    major: MajorPackage
-
-
-class PreDownloadPackage(BaseModel):
-    major: MajorPackage | None = None
-
-
-class GamePackageModel(BaseModel):
-    game: Game
-    main: MainPackage
-    pre_download: PreDownloadPackage | None = None
