@@ -13,10 +13,17 @@ import hun
 async def save_package_and_notify(
     existing_package: hun.GamePackage | None, *, version: str, region: hun.Region, is_preload: bool
 ) -> None:
+    logger.info(f"Processing package save for {region.name}")
+
     if existing_package is not None:
+        logger.info(
+            f"Found existing package for {region.name}, current version: {existing_package.version}"
+        )
+
         if existing_package.version != version:
             if not is_preload:
                 with contextlib.suppress(IntegrityError):
+                    logger.info(f"Creating maintenance record for {region.name}")
                     await hun.GameMaint.create(region=region, version=version)
 
             webhooks = await hun.Webhook.filter(region=region).all()
@@ -33,9 +40,11 @@ async def save_package_and_notify(
                     logger.error(f"Failed to send webhook to {webhook.url!r}")
                     await webhook.delete()
 
-        existing_package.version = version
-        await existing_package.save()
+            logger.info(f"Updating package version for {region.name} to {version}")
+            existing_package.version = version
+            await existing_package.save()
     else:
+        logger.info(f"Creating package record for {region.name}")
         await hun.GamePackage.create(region=region, version=version, is_preload=is_preload)
 
 
@@ -96,7 +105,7 @@ async def handle_game_maint(session: aiohttp.ClientSession) -> None:
             continue
 
         is_maint = await hun.get_maint_status(session, region=maint.region, version=maint.version)
-        logger.info(f"Maintenance status for {maint.region}: {is_maint}")
+        logger.info(f"Maintenance status for {maint.region.name}: {is_maint}")
         if is_maint is None:
             continue
 
@@ -124,8 +133,7 @@ async def handle_sophon_packages(branches: list[hun.GameBranch]) -> None:
         preload_package = branch.pre_download
         if preload_package is None:
             continue
-
-        region = hun.Region(branch.game.id)
+        logger.info(f"Found Sophon pre-download package for {region.name}")
 
         existing_preload_package = await hun.GamePackage.get_or_none(region=region, is_preload=True)
         await save_package_and_notify(
@@ -153,8 +161,8 @@ async def main() -> None:
         branches.extend(await hun.get_game_branches(session, api_region="cn"))
 
         await handle_packages(packages)
-        await handle_game_maint(session)
         await handle_sophon_packages(branches)
+        await handle_game_maint(session)
 
 
 if __name__ == "__main__":

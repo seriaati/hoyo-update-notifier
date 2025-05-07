@@ -31,8 +31,6 @@ async def get_maint_status(
         True if the region is in maintenance.
         False if the maintenance has ended.
     """
-    logger.info(f"Checking maintenance status for {region}")
-
     if (game_biz := MAINT_GAME_BIZS.get(region)) is None:
         return None
 
@@ -50,7 +48,7 @@ async def get_maint_status(
             data = await resp.json()
             return data["data"]["application_maintenance"] is not None
     except Exception as e:
-        logger.error(f"Failed to get maintenance status for {region}: {e}")
+        logger.error(f"Failed to get maintenance status for {region.name}: {e}")
         return False
 
 
