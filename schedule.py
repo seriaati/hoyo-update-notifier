@@ -113,6 +113,14 @@ async def handle_game_maint(session: aiohttp.ClientSession) -> None:
 
 async def handle_sophon_packages(branches: list[hun.GameBranch]) -> None:
     for branch in branches:
+        region = hun.Region(branch.game.id)
+
+        main_package = branch.main
+        existing_main_package = await hun.GamePackage.get_or_none(region=region, is_preload=False)
+        await save_package_and_notify(
+            existing_main_package, version=main_package.version, region=region, is_preload=False
+        )
+
         preload_package = branch.pre_download
         if preload_package is None:
             continue
