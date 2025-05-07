@@ -3,6 +3,7 @@ from __future__ import annotations
 import contextlib
 
 import aiohttp
+import semver
 from loguru import logger
 from tortoise import Tortoise, run_async
 from tortoise.exceptions import IntegrityError
@@ -16,11 +17,10 @@ async def save_package_and_notify(
     logger.info(f"Processing package save for {region.name}")
 
     if existing_package is not None:
-        logger.info(
-            f"Found existing package for {region.name}, current version: {existing_package.version}"
-        )
+        logger.info(f"Found existing package for {region.name}")
+        logger.info(f"DB version: {existing_package.version}, current version: {version}")
 
-        if existing_package.version != version:
+        if semver.Version.parse(existing_package.version) < semver.Version.parse(version):
             if not is_preload:
                 with contextlib.suppress(IntegrityError):
                     logger.info(f"Creating maintenance record for {region.name}")
