@@ -96,6 +96,7 @@ async def handle_game_maint(session: aiohttp.ClientSession) -> None:
             continue
 
         is_maint = await hun.get_maint_status(session, region=maint.region, version=maint.version)
+        logger.info(f"Maintenance status for {maint.region}: {is_maint}")
         if is_maint is None:
             continue
 
