@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import contextlib
+import sys
 
 import aiohttp
 import semver
@@ -166,4 +167,8 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
+    logger.remove()
+    logger.add(sys.stderr, level="INFO")
+    logger.add("logs/log.log", rotation="1 day", retention="14 days", level="INFO")
+
     run_async(main())
