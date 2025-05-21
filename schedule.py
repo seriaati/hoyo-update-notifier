@@ -95,7 +95,7 @@ async def notify_game_maint(maint: hun.GameMaint, *, is_maint: bool) -> None:
 
 
 async def handle_game_maint(session: aiohttp.ClientSession) -> None:
-    packages = await hun.GamePackage.all()
+    packages = await hun.GamePackage.filter(is_preload=False)
 
     for package in packages:
         maint = await hun.GameMaint.get_or_none(region=package.region, version=package.version)
