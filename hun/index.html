@@ -24,6 +24,13 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
             width: 300px;
+            max-width: 90vw;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                width: 500px;
+            }
         }
 
         h1 {
@@ -79,6 +86,7 @@
 <body>
     <div class="container">
         <h1>Hoyo Update Notifier</h1>
+        <p style="font-size: 0.9rem;">Notify via Discord webhook whenever a Hoyoverse game is updated, in maintenance, or has preload available.</p>
         <select id="regionSelect"></select>
         <input type="text" id="webhookInput" placeholder="https://discord.com/api/webhooks/...">
         <button id="saveButton">Save</button>
