@@ -75,7 +75,10 @@ REGION_NAMES = {
     Region.HI3_CN: "Honkai Impact 3rd (China)",
 }
 ICONS = {
-    (Region.GI_CN, Region.GI_GLB): "https://iili.io/dKleQ4I.png",
+    (
+        Region.GI_CN,
+        Region.GI_GLB,
+    ): "https://raw.githubusercontent.com/seriaati/hoyo-update-notifier/refs/heads/main/game_icons/icon_ys.jpg",
     (
         Region.HI3_CN,
         Region.HI3_JP,
@@ -83,9 +86,15 @@ ICONS = {
         Region.HI3_SEA,
         Region.HI3_TW,
         Region.HI3_US_EU,
-    ): "https://iili.io/dKleLEN.png",
-    (Region.HSR_CN, Region.HSR_GLB): "https://iili.io/dKlesBp.png",
-    (Region.ZZZ_CN, Region.ZZZ_GLB): "https://iili.io/dKlekrP.png",
+    ): "https://raw.githubusercontent.com/seriaati/hoyo-update-notifier/refs/heads/main/game_icons/icon_bh3.jpg",
+    (
+        Region.HSR_CN,
+        Region.HSR_GLB,
+    ): "https://raw.githubusercontent.com/seriaati/hoyo-update-notifier/refs/heads/main/game_icons/icon_sr.jpg",
+    (
+        Region.ZZZ_CN,
+        Region.ZZZ_GLB,
+    ): "https://raw.githubusercontent.com/seriaati/hoyo-update-notifier/refs/heads/main/game_icons/icon_zzz.jpg",
 }
 
 
