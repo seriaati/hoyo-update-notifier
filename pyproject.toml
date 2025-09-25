@@ -1,7 +1,7 @@
 [project]
 name = "hoyo-update-notifier"
 version = "2.0.0"
-description = "Notify via Discord webhook when a Hoyo game is updated/preload is available"
+description = "Notify via Discord webhook whenever a Hoyoverse game is updated, in maintenance, or has preload available."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
