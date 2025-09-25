@@ -1,7 +1,8 @@
 # hoyo-update-notifier
 
-Notify via Discord webhook when a Hoyo game is updated/preload is available.  
-Site is available at https://hoyo-update-notifier.seria.moe/  
+Notify via Discord webhook whenever a Hoyoverse game is updated, in maintenance, or preload is available.  
+Site is available at https://hun.seria.moe/
+
 Created with the help of [studiobuttermedia/anime_api](https://github.com/studiobuttermedia/anime_api).
 
 ## Sample notification
