@@ -10,8 +10,8 @@ from fastapi import FastAPI, Response, status
 from fastapi.responses import HTMLResponse, JSONResponse
 from tortoise import Tortoise
 
-from .constants import REGION_NAMES
-from .models import Webhook
+from .constants import REGION_NAMES, Region
+from .models import GamePackage, Webhook
 from .schemas import WebhookCreate, WebhookTest
 from .webhook import get_test_webhook_data, send_webhook
 
@@ -63,3 +63,22 @@ async def create_webhook(data: WebhookCreate) -> Response:
 async def test_webhook(data: WebhookTest) -> Response:
     await send_webhook(data.url, get_test_webhook_data())
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@app.get("/games/{region}/version")
+async def get_game_version(region: Region) -> JSONResponse:
+    """Get the current latest stable version for a game region."""
+    latest_version = (
+        await GamePackage.filter(region=region, is_preload=False).order_by("-id").first()
+    )
+
+    if latest_version is None:
+        return JSONResponse(
+            content={"error": "No version found for this region"},
+            status_code=status.HTTP_404_NOT_FOUND,
+        )
+
+    return JSONResponse(
+        content={"region": region.value, "version": latest_version.version},
+        status_code=status.HTTP_200_OK,
+    )
