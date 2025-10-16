@@ -6,101 +6,282 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hoyo Update Notifier</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            padding: 2rem 1rem;
+            line-height: 1.6;
         }
 
         .container {
-            text-align: center;
-            background-color: #2a2a2a;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-            width: 300px;
-            max-width: 90vw;
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 3rem 2.5rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
-        @media (min-width: 768px) {
-            .container {
-                width: 500px;
-            }
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
         }
 
         h1 {
-            color: #b19cd9;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+
+        .description {
+            font-size: 0.875rem;
+            color: #a0a0a0;
+            margin-bottom: 0;
+        }
+
+        .form-group {
             margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            color: #b0b0b0;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
         }
 
         select,
-        input,
-        button {
-            display: block;
+        input {
             width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            border: none;
-            border-radius: 5px;
-            background-color: #3a3a3a;
+            padding: 0.875rem 1rem;
+            background: rgba(30, 30, 30, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
             color: #ffffff;
-            box-sizing: border-box;
+            font-size: 0.9375rem;
+            transition: all 0.2s ease;
+            outline: none;
         }
 
         select {
             appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23a0a0a0' d='M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 0.7rem top 50%;
-            padding-right: 1.5rem;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+
+        select:hover,
+        input:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        select:focus,
+        input:focus {
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(35, 35, 35, 0.8);
+        }
+
+        input::placeholder {
+            color: #666;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 2rem;
         }
 
         button {
-            background-color: #b19cd9;
-            color: #1a1a1a;
+            flex: 1;
+            padding: 0.875rem 1.5rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 0.9375rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.3s;
-            font-weight: bold;
+            transition: all 0.2s ease;
+            outline: none;
         }
 
         button:hover {
-            background-color: #9a7ec9;
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
         }
 
-        .error {
-            color: #ff6b6b;
-            margin-top: 1rem;
-            font-size: 0.9rem;
+        button:active {
+            transform: translateY(0);
+        }
+
+        #saveButton {
+            background: rgba(255, 255, 255, 0.95);
+            color: #0a0a0a;
+            border: none;
+        }
+
+        #saveButton:hover {
+            background: #ffffff;
+        }
+
+        .message {
+            margin-top: 1.5rem;
+            padding: 0.875rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .message.success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        footer {
+            margin-top: 2.5rem;
+            text-align: center;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 0.625rem 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .github-link:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .github-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Hoyo Update Notifier</h1>
-        <p style="font-size: 0.9rem;">Notify via Discord webhook whenever a Hoyoverse game is updated, in maintenance, or has preload available.</p>
-        <select id="regionSelect"></select>
-        <input type="text" id="webhookInput" placeholder="https://discord.com/api/webhooks/...">
-        <button id="saveButton">Save</button>
-        <button id="testButton">Test webhook</button>
-        <div id="errorMessage" class="error"></div>
+        <header>
+            <h1>Hoyo Update Notifier</h1>
+            <p class="description">Receive Discord notifications for Hoyoverse game updates, maintenance, and preloads</p>
+        </header>
+
+        <form id="webhookForm">
+            <div class="form-group">
+                <label for="regionSelect">Region</label>
+                <select id="regionSelect"></select>
+            </div>
+
+            <div class="form-group">
+                <label for="webhookInput">Discord Webhook URL</label>
+                <input type="url" id="webhookInput" placeholder="https://discord.com/api/webhooks/..." required>
+            </div>
+
+            <div class="button-group">
+                <button type="button" id="testButton">Test</button>
+                <button type="submit" id="saveButton">Save Webhook</button>
+            </div>
+        </form>
+
+        <div id="message" class="message"></div>
     </div>
+
+    <footer>
+        <a href="https://github.com/seriaati/hoyo-update-notifier" target="_blank" rel="noopener noreferrer" class="github-link">
+            <svg class="github-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            View on GitHub
+        </a>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const regionSelect = document.getElementById('regionSelect');
             const webhookInput = document.getElementById('webhookInput');
-            const saveButton = document.getElementById('saveButton');
+            const webhookForm = document.getElementById('webhookForm');
             const testButton = document.getElementById('testButton');
-            const errorMessage = document.getElementById('errorMessage');
+            const message = document.getElementById('message');
+
+            function showMessage(text, type) {
+                message.textContent = text;
+                message.className = `message ${type} show`;
+                setTimeout(() => {
+                    message.classList.remove('show');
+                }, 5000);
+            }
 
             // Fetch regions from the API
             fetch('/regions')
@@ -115,16 +296,17 @@
                 })
                 .catch(error => {
                     console.error('Error fetching regions:', error);
-                    errorMessage.textContent = 'Failed to load regions. Please try again later.';
+                    showMessage('Failed to load regions. Please try again later.', 'error');
                 });
 
             // Save button click handler
-            saveButton.addEventListener('click', () => {
+            webhookForm.addEventListener('submit', (e) => {
+                e.preventDefault();
                 const selectedRegion = regionSelect.value;
                 const webhookUrl = webhookInput.value.trim();
 
                 if (!webhookUrl) {
-                    errorMessage.textContent = 'Please enter a webhook URL.';
+                    showMessage('Please enter a webhook URL.', 'error');
                     return;
                 }
 
@@ -141,26 +323,24 @@
                 })
                     .then(response => {
                         if (response.ok) {
-                            errorMessage.textContent = 'Webhook saved successfully for ' + regionSelect.options[regionSelect.selectedIndex].text + '!';
-                            errorMessage.style.color = '#4caf50';
+                            const regionName = regionSelect.options[regionSelect.selectedIndex].text;
+                            showMessage(`Webhook saved successfully for ${regionName}!`, 'success');
                         } else {
                             throw new Error('Failed to save webhook');
                         }
                     })
                     .catch(error => {
                         console.error('Error saving webhook:', error);
-                        errorMessage.textContent = 'Failed to save webhook. Please try again.';
-                        errorMessage.style.color = '#ff6b6b';
+                        showMessage('Failed to save webhook. Please try again.', 'error');
                     });
             });
 
             // Test button click handler
             testButton.addEventListener('click', () => {
-                const selectedRegion = regionSelect.value;
                 const webhookUrl = webhookInput.value.trim();
 
                 if (!webhookUrl) {
-                    errorMessage.textContent = 'Please enter a webhook URL.';
+                    showMessage('Please enter a webhook URL.', 'error');
                     return;
                 }
 
@@ -176,16 +356,14 @@
                 })
                     .then(response => {
                         if (response.ok) {
-                            errorMessage.textContent = 'Test message sent successfully!';
-                            errorMessage.style.color = '#4caf50';
+                            showMessage('Test message sent successfully!', 'success');
                         } else {
                             throw new Error('Failed to send test message');
                         }
                     })
                     .catch(error => {
                         console.error('Error sending test message:', error);
-                        errorMessage.textContent = 'Failed to send test message. Please try again.';
-                        errorMessage.style.color = '#ff6b6b';
+                        showMessage('Failed to send test message. Please try again.', 'error');
                     });
             });
         });
