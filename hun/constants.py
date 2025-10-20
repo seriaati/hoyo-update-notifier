@@ -97,6 +97,14 @@ ICONS = {
     ): "https://raw.githubusercontent.com/seriaati/hoyo-update-notifier/refs/heads/main/game_icons/icon_zzz.jpg",
 }
 
+NOTICE = {
+    Region.GI_GLB: "https://m.hoyolab.com/toBBS.html?game_id=2",
+    Region.GI_CN: "https://bbs.mihoyo.com/ysToBBS.html",
+    Region.HSR_GLB: "https://m.hoyolab.com/toBBS.html?game_id=6",
+    Region.HSR_CN: "https://bbs.mihoyo.com/srToBBS.html",
+    Region.ZZZ_GLB: "https://m.hoyolab.com/toBBS.html?game_id=8",
+    Region.ZZZ_CN: "https://bbs.mihoyo.com/zzzToBBS.html",
+}
 
 def get_region_name(region: Region) -> str:
     return REGION_NAMES.get(region, "Unknown region")
@@ -106,5 +114,12 @@ def get_region_icon(region: Region) -> str:
     for regions, icon in ICONS.items():
         if region in regions:
             return icon
+
+    return ""
+
+def get_notice_url(region: Region) -> str:
+    for regions, url in NOTICE.items():
+        if region == regions:
+            return url
 
     return ""

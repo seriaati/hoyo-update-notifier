@@ -4,7 +4,7 @@ from typing import Any
 
 import aiohttp
 
-from .constants import REGION_NAMES, Region, get_region_icon
+from .constants import REGION_NAMES, Region, get_region_icon, get_notice_url
 
 __all__ = (
     "get_game_maint_webhook_data",
@@ -34,6 +34,19 @@ def get_game_webhook_data(
                 "thumbnail": {"url": get_region_icon(region)},
             }
         ],
+        "components": [
+            {
+                "type": 1,
+                "components": [
+                    {
+                        "type": 2,
+                        "style": 5,
+                        "label": "View Updated Content",
+                        "url": get_notice_url(region),
+                    }
+                ]
+            }
+        ] if not is_preload else None,
         "content": " ".join(f"<@&{role_id}>" for role_id in role_ids),
     }
 
