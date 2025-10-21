@@ -106,6 +106,7 @@ NOTICE = {
     Region.ZZZ_CN: "https://bbs.mihoyo.com/zzzToBBS.html",
 }
 
+
 def get_region_name(region: Region) -> str:
     return REGION_NAMES.get(region, "Unknown region")
 
@@ -117,5 +118,6 @@ def get_region_icon(region: Region) -> str:
 
     return ""
 
-def get_notice_url(region: Region) -> str:
-    return NOTICE.get(region, "")
+
+def get_notice_url(region: Region) -> str | None:
+    return NOTICE.get(region)
