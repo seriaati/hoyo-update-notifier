@@ -4,7 +4,7 @@ from typing import Any
 
 import aiohttp
 
-from .constants import REGION_NAMES, Region, get_region_icon
+from .constants import REGION_NAMES, Region, get_notice_url, get_region_icon
 
 __all__ = (
     "get_game_maint_webhook_data",
@@ -17,6 +17,13 @@ __all__ = (
 def get_game_webhook_data(
     region: Region, *, version: str, is_preload: bool, role_ids: list[int]
 ) -> dict[str, Any]:
+    # Base description always includes region and version
+    description = f"{REGION_NAMES[region]}: v{version}"
+
+    # Only add the patch notes link if it's NOT a preload
+    if not is_preload and (notice_url := get_notice_url(region)):
+        description += f"\n[Read what's new here!]({notice_url})"
+
     return {
         "username": "Hoyo Update Notifier",
         "avatar_url": "https://i.imgur.com/tLHYWyR.png",
@@ -26,10 +33,10 @@ def get_game_webhook_data(
                     "name": "Hoyo Update Notifier",
                     "url": "https://hoyo-update-notifier.seria.moe",
                 },
-                "title": "A new preload is available!"
-                if is_preload
-                else "A new update is available!",
-                "description": f"{REGION_NAMES[region]}: v{version}",
+                "title": (
+                    "A new preload is available!" if is_preload else "A new update is available!"
+                ),
+                "description": description,
                 "color": 8688619,
                 "thumbnail": {"url": get_region_icon(region)},
             }
