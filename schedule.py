@@ -31,6 +31,11 @@ async def save_package_and_notify(
             logger.info(f"Sending {region} webhooks, total {len(webhooks)}")
 
             for webhook in webhooks:
+                if not is_preload:
+                    # Disable "A new update is available!" webhooks because they always
+                    # come with maintenance and are redundant.
+                    continue
+
                 success = await hun.send_webhook(
                     webhook.url,
                     hun.get_game_webhook_data(
