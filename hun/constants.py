@@ -118,8 +118,4 @@ def get_region_icon(region: Region) -> str:
     return ""
 
 def get_notice_url(region: Region) -> str:
-    for regions, url in NOTICE.items():
-        if region == regions:
-            return url
-
-    return ""
+    return NOTICE.get(region, "")

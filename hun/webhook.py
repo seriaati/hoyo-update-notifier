@@ -29,24 +29,14 @@ def get_game_webhook_data(
                 "title": "A new preload is available!"
                 if is_preload
                 else "A new update is available!",
-                "description": f"{REGION_NAMES[region]}: v{version}",
+                "description": (
+                    f"{REGION_NAMES[region]}: v{version}\n"
+                    f"[Read the New Content here!]({get_notice_url(region)})"
+                ),
                 "color": 8688619,
                 "thumbnail": {"url": get_region_icon(region)},
             }
         ],
-        "components": [
-            {
-                "type": 1,
-                "components": [
-                    {
-                        "type": 2,
-                        "style": 5,
-                        "label": "View Updated Content",
-                        "url": get_notice_url(region),
-                    }
-                ]
-            }
-        ] if not is_preload else None,
         "content": " ".join(f"<@&{role_id}>" for role_id in role_ids),
     }
 
