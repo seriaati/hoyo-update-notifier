@@ -1,15 +1,16 @@
 from __future__ import annotations
 
 import contextlib
-import sys
+from typing import TYPE_CHECKING
 
-import aiohttp
 import semver
 from loguru import logger
-from tortoise import Tortoise, run_async
 from tortoise.exceptions import IntegrityError
 
 import hun
+
+if TYPE_CHECKING:
+    import aiohttp
 
 
 async def save_package_and_notify(
@@ -150,30 +151,23 @@ async def handle_sophon_packages(branches: list[hun.GameBranch]) -> None:
         )
 
 
-async def main() -> None:
-    await Tortoise.init(db_url="sqlite://hun.db", modules={"models": ["hun.models"]})
-    await Tortoise.generate_schemas()
+async def check_game_updates(session: aiohttp.ClientSession) -> None:
+    """Scheduled task to check for game updates and maintenance status."""
+    logger.info("Starting scheduled game update check")
 
     packages: list[hun.GamePackageModel] = []
     branches: list[hun.GameBranch] = []
 
-    async with aiohttp.ClientSession() as session:
-        # Normal game packages
-        packages.extend(await hun.get_game_packages(session, api_region="cn"))
-        packages.extend(await hun.get_game_packages(session, api_region="global"))
+    # Normal game packages
+    packages.extend(await hun.get_game_packages(session, api_region="cn"))
+    packages.extend(await hun.get_game_packages(session, api_region="global"))
 
-        # Sophon pre-downloads
-        branches.extend(await hun.get_game_branches(session, api_region="global"))
-        branches.extend(await hun.get_game_branches(session, api_region="cn"))
+    # Sophon pre-downloads
+    branches.extend(await hun.get_game_branches(session, api_region="global"))
+    branches.extend(await hun.get_game_branches(session, api_region="cn"))
 
-        await handle_packages(packages)
-        await handle_sophon_packages(branches)
-        await handle_game_maint(session)
+    await handle_packages(packages)
+    await handle_sophon_packages(branches)
+    await handle_game_maint(session)
 
-
-if __name__ == "__main__":
-    logger.remove()
-    logger.add(sys.stderr, level="INFO")
-    logger.add("logs/log.log", rotation="1 day", retention="14 days", level="INFO")
-
-    run_async(main())
+    logger.info("Completed scheduled game update check")

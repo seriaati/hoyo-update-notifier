@@ -6,12 +6,14 @@ from typing import TYPE_CHECKING
 
 import aiofiles
 import aiohttp
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import FastAPI, Response, status
 from fastapi.responses import HTMLResponse, JSONResponse
 from tortoise import Tortoise
 
 from .constants import REGION_NAMES, Region
 from .models import GamePackage, Webhook
+from .scheduler import check_game_updates
 from .schemas import WebhookCreate, WebhookTest
 from .webhook import get_test_webhook_data, send_webhook
 
@@ -28,7 +30,23 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     app.state.session = aiohttp.ClientSession()
     await Tortoise.init(db_url="sqlite://data/hun.db", modules={"models": ["hun.models"]})
     await Tortoise.generate_schemas()
+
+    # Initialize and start APScheduler
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(
+        check_game_updates,
+        "interval",
+        minutes=10,
+        args=[app.state.session],
+        id="check_game_updates",
+    )
+    scheduler.start()
+
     yield
+
+    # Shutdown scheduler
+    scheduler.shutdown()
+
     await app.state.session.close()
     await Tortoise.close_connections()
 
