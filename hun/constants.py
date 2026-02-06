@@ -48,7 +48,7 @@ MAINT_ENDPOINTS = {
     Region.GI_CN: "https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/getGlobalApplicationMaintenance",
     Region.HSR_GLB: "https://cg-hkrpg-api.mihoyo.com/hkrpg_cn/cg/gamer/api/getGlobalApplicationMaintenance",
     Region.HSR_CN: "https://cg-hkrpg-api.mihoyo.com/hkrpg_cn/cg/gamer/api/getGlobalApplicationMaintenance",
-    Region.ZZZ_GLB: "https://cg-nap-api.mihoyo.com/nap_cn/cg/gamer/api/getGlobalApplicationMaintenance",
+    Region.ZZZ_GLB: "https://sg-cg-nap-api.hoyoverse.com/nap_global/cg/gamer/api/getGlobalApplicationMaintenance",
     Region.ZZZ_CN: "https://cg-nap-api.mihoyo.com/nap_cn/cg/gamer/api/getGlobalApplicationMaintenance",
 }
 MAINT_GAME_BIZS = {
