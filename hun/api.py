@@ -26,7 +26,7 @@ logger = logging.getLogger("uvicorn")
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     app.state.session = aiohttp.ClientSession()
-    await Tortoise.init(db_url="sqlite://hun.db", modules={"models": ["hun.models"]})
+    await Tortoise.init(db_url="sqlite://data/hun.db", modules={"models": ["hun.models"]})
     await Tortoise.generate_schemas()
     yield
     await app.state.session.close()

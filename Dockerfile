@@ -37,11 +37,17 @@ COPY --from=builder --chown=appuser:appuser /app/.venv /app/.venv
 # Copy application code
 COPY --chown=appuser:appuser . /app
 
+# Create data directory for SQLite database with proper permissions
+RUN mkdir -p /app/data && chown -R appuser:appuser /app/data
+
 # Add virtual environment to PATH
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Switch to non-root user
 USER appuser
+
+# Create volume for persistent data (database)
+VOLUME ["/app/data"]
 
 # Expose FastAPI port
 EXPOSE 8092
