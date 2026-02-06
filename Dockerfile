@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # Use uv image for building dependencies
-FROM ghcr.io/astral-sh/uv:python3.11-bookworm-slim AS builder
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS builder
 
 # Set environment variables for optimal uv behavior
 ENV UV_COMPILE_BYTECODE=1 \
@@ -24,7 +24,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 
 # Final runtime image
-FROM python:3.11-slim-bookworm
+FROM python:3.12-slim-bookworm
 
 # Create non-root user for security
 RUN groupadd -r appuser && useradd -r -g appuser appuser
