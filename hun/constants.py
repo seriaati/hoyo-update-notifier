@@ -2,13 +2,7 @@ from __future__ import annotations
 
 from enum import StrEnum
 
-__all__ = (
-    "GAME_PACKAGES_CN_URL",
-    "GAME_PACKAGES_GLOBAL_URL",
-    "Region",
-    "get_region_icon",
-    "get_region_name",
-)
+__all__ = ("Region", "get_region_icon", "get_region_name")
 
 
 class Region(StrEnum):
@@ -28,13 +22,6 @@ class Region(StrEnum):
     HI3_TW = "wkE5P5WsIf"
     HI3_CN = "osvnlOc0S8"
 
-
-GAME_PACKAGES_GLOBAL_URL = (
-    "https://sg-hyp-api.hoyoverse.com/hyp/hyp-connect/api/getGamePackages?launcher_id=VYTpXlbWo8"
-)
-GAME_PACKAGES_CN_URL = (
-    "https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGamePackages?launcher_id=jGHBHlcOq1"
-)
 
 GAME_BRANCHES_GLOBAL_URL = (
     "https://sg-hyp-api.hoyoverse.com/hyp/hyp-connect/api/getGameBranches?launcher_id=VYTpXlbWo8"
