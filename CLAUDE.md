@@ -9,8 +9,7 @@ This is a Python Discord webhook service that monitors Hoyoverse game updates an
 ## Development Commands
 
 ### Running the Application
-- **Main server**: `python run.py` (starts FastAPI server on port 8092)
-- **Scheduler**: `python schedule.py` (runs game monitoring logic)
+- **Main server**: `python run.py` (starts FastAPI server on port 8092 with integrated scheduler)
 - **Test script**: `python test.py`
 
 ### Code Quality
@@ -31,8 +30,10 @@ This is a Python Discord webhook service that monitors Hoyoverse game updates an
 - REST endpoints: `/regions`, `/webhooks`, `/webhooks/test`
 - Database initialization with Tortoise ORM (SQLite)
 - aiohttp session management in lifespan
+- APScheduler integration for automated game monitoring (runs every 10 minutes)
 
-**Game Monitoring System (`schedule.py`)**
+**Game Monitoring System (`hun/scheduler.py`)**
+- Scheduled task that runs every 10 minutes via APScheduler
 - Fetches game packages from Hoyoverse APIs (global & CN)
 - Tracks version changes using semver comparison
 - Monitors maintenance status via game-specific endpoints
@@ -51,7 +52,7 @@ This is a Python Discord webhook service that monitors Hoyoverse game updates an
 
 ### Data Flow
 
-1. **Game Package Monitoring**: `schedule.py` → Hoyoverse APIs → version comparison → Discord webhooks
+1. **Game Package Monitoring**: APScheduler → `hun/scheduler.py` → Hoyoverse APIs → version comparison → Discord webhooks
 2. **Maintenance Tracking**: Game-specific endpoints → maintenance status → notification state machine
 3. **Webhook Management**: Web UI → FastAPI → database → Discord API
 
@@ -64,7 +65,7 @@ This is a Python Discord webhook service that monitors Hoyoverse game updates an
 - Region names and icons mapping
 
 **Settings & Dependencies**
-- `pyproject.toml`: Python 3.11+, async dependencies (aiohttp, FastAPI, Tortoise ORM)
+- `pyproject.toml`: Python 3.11+, async dependencies (aiohttp, FastAPI, Tortoise ORM, APScheduler)
 - `ruff.toml`: Comprehensive linting rules, Google docstring convention
 - `pm2.json`: Process manager configuration for production deployment
 
