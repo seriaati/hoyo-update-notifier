@@ -55,8 +55,8 @@ jobs:
             type=ref,event=branch
             # Tag with PR number for pull requests
             type=ref,event=pr
-            # Tag with git short SHA
-            type=sha,prefix={{branch}}-
+            # Tag with git short SHA (only on non-PR events to avoid empty branch prefix)
+            type=sha,prefix={{branch}}-,enable=${{ github.event_name != 'pull_request' }}
             # Tag as latest for main branch
             type=raw,value=latest,enable={{is_default_branch}}
           labels: |
