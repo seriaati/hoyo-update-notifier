@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import pathlib
 from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING
 
@@ -51,6 +52,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     await Tortoise.close_connections()
 
 
+pathlib.Path("data").mkdir(exist_ok=True, parents=True)
 app = FastAPI(lifespan=lifespan)
 
 
