@@ -43,8 +43,8 @@ MAINT_GAME_BIZS = {
     Region.GI_CN: "hk4e_cn",
     Region.HSR_GLB: "hkrpg_cn",
     Region.HSR_CN: "hkrpg_cn",
-    Region.ZZZ_GLB: "nap_cn",
-    Region.ZZZ_CN: "nap_global",
+    Region.ZZZ_GLB: "nap_global",
+    Region.ZZZ_CN: "nap_cn",
 }
 
 REGION_NAMES = {
